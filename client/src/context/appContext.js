@@ -14,6 +14,11 @@ import {
     UPDATE_USER_BEGIN,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_ERROR,
+    HANDLE_CHANGE,
+    CLEAR_VALUES,
+    CREATE_CLIENT_BEGIN,
+    CREATE_CLIENT_SUCCESS,
+    CREATE_CLIENT_ERROR,
  } from './actions'
 
 const token = localStorage.getItem('token')
@@ -33,6 +38,15 @@ const initialState = {
  userLocation: userLocation || '',
  jobLocation: userLocation || '',
  showSidebar: false,
+ isEditing: false,
+ editClientId:'',
+ nameClient:'',
+ surnameClient:'',
+ clientNumber:'',
+ clientPackageOptions: ['basic', 'premium', 'pro', 'none'],
+clientPackage: 'none',
+statusOptions:  ['month', '3month', 'year'] ,
+status: 'month',
 }
 
 
@@ -153,8 +167,41 @@ const logoutUser = async () => {
     clearAlert();
   };
 
+const handleChange = ({ name, value}) => {
+  dispatch({ type:HANDLE_CHANGE ,payload: {name, value}})
+}
+const clearValues = () => {
+  dispatchEvent({ type: CLEAR_VALUES})
+}
 
- return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser}}>{children}</AppContext.Provider>
+
+const createClient = async () => {
+  dispatch({type: CREATE_CLIENT_BEGIN})
+  try {
+    const { nameClient,surnameClient, clientNumber,clientPackage,status} = state
+    await authFetch.post('/clients', {
+     nameClient,
+     surnameClient,
+      clientNumber,
+      clientPackage,
+      status,
+    })
+dispatch({type: CREATE_CLIENT_SUCCESS})
+dispatch({type: CLEAR_VALUES})
+
+  } catch (error) {
+    if (error.response.status === 401) return
+    dispatch({
+      type: CREATE_CLIENT_ERROR,
+      payload: {msg: error.response.data.msg},
+    })
+  }
+  clearAlert()
+}
+
+
+
+ return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser,handleChange,clearValues,createClient}}>{children}</AppContext.Provider>
 }
 
 const useAppContext = () => {

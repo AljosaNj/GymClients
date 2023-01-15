@@ -1,30 +1,31 @@
 import mongoose from 'mongoose'
 
-const JobSchema = new mongoose.Schema(
+const ClientSchema = new mongoose.Schema(
   {
-    company: {
+    surnameClient: {
       type: String,
       required: [true, 'Please provide company'],
-      maxlength: 50,
+      maxlength: 20,
     },
-    position: {
+    nameClient: {
       type: String,
       required: [true, 'Please provide position'],
-      maxlength: 100,
+       minlength: 3,
+      maxlength: 20,
     },
     status: {
       type: String,
-      enum: ['interview', 'declined', 'pending'],
-      default: 'pending',
+      enum: ['month', '3month', 'year'],
+      default: 'month',
     },
-    jobType: {
+    clientPackage: {
       type: String,
-      enum: ['full-time', 'part-time', 'remote', 'internship'],
-      default: 'full-time',
+      enum: ['basic', 'premium', 'pro', 'none'],
+      default: 'none',
     },
-    jobLocation: {
+    clientNumber: {
       type: String,
-      default: 'my city',
+     default: 'month',
       required: true,
     },
     createdBy: {
@@ -36,4 +37,4 @@ const JobSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export default mongoose.model('Job', JobSchema)
+export default mongoose.model('Client', ClientSchema)

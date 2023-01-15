@@ -8,7 +8,12 @@ import {
     LOGOUT_USER,
     UPDATE_USER_BEGIN,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_ERROR
+    UPDATE_USER_ERROR,
+    HANDLE_CHANGE,
+    CLEAR_VALUES,
+    CREATE_CLIENT_BEGIN,
+    CREATE_CLIENT_SUCCESS,
+    CREATE_CLIENT_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -106,6 +111,56 @@ if (action.type === UPDATE_USER_ERROR){
     alertText: action.payload.msg
   }
 }
+
+if (action.type === HANDLE_CHANGE){
+  return {
+    ...state,
+   [action.payload.name]: action.payload.value,
+  }
+}
+if (action.type === CLEAR_VALUES){
+const initialState = {
+isEditing: false,
+ editClientId:'',
+ nameClient:'',
+ surnameClient:'',
+ clientNumber:'',
+clientPackage: 'none',
+status: 'month',
+
+}
+
+
+  return {
+    ...state,
+    ...initialState,
+   
+  }
+}
+
+ if (action.type === CREATE_CLIENT_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === CREATE_CLIENT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Job Created!',
+    };
+  }
+  if (action.type === CREATE_CLIENT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
+  }
+
 
 
 
