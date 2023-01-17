@@ -19,6 +19,16 @@ import {
     CREATE_CLIENT_BEGIN,
     CREATE_CLIENT_SUCCESS,
     CREATE_CLIENT_ERROR,
+    GET_CLIENTS_BEGIN,
+    GET_CLIENTS_SUCCESS,
+    SET_EDIT_CLIENT,
+    DELETE_CLIENT_BEGIN,
+    DELETE_CLIENT_ERROR,
+    EDIT_CLIENT_BEGIN,
+    EDIT_CLIENT_SUCCESS,
+    EDIT_CLIENT_ERROR,
+    SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
  } from './actions'
 
 const token = localStorage.getItem('token')
@@ -43,10 +53,16 @@ const initialState = {
  nameClient:'',
  surnameClient:'',
  clientNumber:'',
- clientPackageOptions: ['basic', 'premium', 'pro', 'none'],
+ clientPackageOptions:  ['basic', 'premium', 'pro', 'none'],
 clientPackage: 'none',
-statusOptions:  ['month', '3month', 'year'] ,
+statusOptions:  ['month', 'threemonths', 'year'] ,
 status: 'month',
+clients:[],
+totalClients:0,
+numOfPages:1,
+page:1,
+ stats: {},
+ monthlyApplications: [],
 }
 
 
@@ -198,10 +214,93 @@ dispatch({type: CLEAR_VALUES})
   }
   clearAlert()
 }
+const getClients = async () => {
+   let url =`/clients`
+  
+    dispatch({ type: GET_CLIENTS_BEGIN });
+    try {
+      const { data } = await authFetch(url);
+      const { clients, totalClients, numOfPages } = data;
+      dispatch({
+        type: GET_CLIENTS_SUCCESS,
+        payload: {
+          clients,
+          totalClients,
+          numOfPages,
+        },
+      });
+    } catch (error) {
+    
+      logoutUser();
+    }
+   clearAlert()
+  };
+
+    const setEditClient = (id) => {
+    dispatch({ type: SET_EDIT_CLIENT, payload: {id}});
+  };
+
+  const editClient = async () => {
+    dispatch({ type: EDIT_CLIENT_BEGIN });
+
+    try {
+      const { nameClient, surnameClient, clientNumber, clientPackage, status } = state;
+      await authFetch.patch(`/clients/${state.editClientId}`, {
+        nameClient,
+        surnameClient,
+        clientNumber,
+        clientPackage,
+        status,
+      });
+      dispatch({ type: EDIT_CLIENT_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_CLIENT_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+
+  const deleteClient = async (clientId) => {
+    dispatch({ type: DELETE_CLIENT_BEGIN });
+    try {
+      await authFetch.delete(`/clients/${clientId}`);
+      getClients();
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: DELETE_CLIENT_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+ const showStats = async () => {
+    dispatch({ type: SHOW_STATS_BEGIN });
+    try {
+      const { data } = await authFetch('/clients/stats');
+      dispatch({
+        type: SHOW_STATS_SUCCESS,
+        payload: {
+          stats: data.defaultStats,
+          monthlyApplications: data.monthlyApplications,
+        },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  };
 
 
 
- return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser,handleChange,clearValues,createClient}}>{children}</AppContext.Provider>
+
+ return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser,handleChange,clearValues,createClient,getClients,setEditClient,deleteClient,editClient,showStats}}>{children}</AppContext.Provider>
 }
 
 const useAppContext = () => {

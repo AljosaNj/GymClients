@@ -14,6 +14,16 @@ import {
     CREATE_CLIENT_BEGIN,
     CREATE_CLIENT_SUCCESS,
     CREATE_CLIENT_ERROR,
+    GET_CLIENTS_BEGIN,
+    GET_CLIENTS_SUCCESS,
+    SET_EDIT_CLIENT,
+    DELETE_CLIENT_BEGIN,
+    DELETE_CLIENT_ERROR,
+      EDIT_CLIENT_BEGIN,
+  EDIT_CLIENT_SUCCESS,
+  EDIT_CLIENT_ERROR,
+   SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -22,7 +32,7 @@ import { initialState } from './appContext';
 
 const reducer = (state, action) => {
   
-  if (action.type === DISPLAY_ALERT) {
+  if (action.type  === DISPLAY_ALERT) {
     return {
       ...state,
       showAlert: true,
@@ -115,6 +125,7 @@ if (action.type === UPDATE_USER_ERROR){
 if (action.type === HANDLE_CHANGE){
   return {
     ...state,
+    page:1,
    [action.payload.name]: action.payload.value,
   }
 }
@@ -148,7 +159,7 @@ status: 'month',
       isLoading: false,
       showAlert: true,
       alertType: 'success',
-      alertText: 'New Job Created!',
+      alertText: 'New Client Created!',
     };
   }
   if (action.type === CREATE_CLIENT_ERROR) {
@@ -161,6 +172,86 @@ status: 'month',
     };
   }
 
+    if (action.type === GET_CLIENTS_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_CLIENTS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      clients: action.payload.clients,
+      totalClients: action.payload.totalClients,
+      numOfPages: action.payload.numOfPages,
+    };
+  }
+
+ if (action.type === SET_EDIT_CLIENT) {
+    const client = state.clients.find((client) => client._id === action.payload.id);
+    const { _id, nameClient, surnameClient, clientNumber, clientPackage, status } = client;
+    return {
+      ...state,
+      isEditing: true,
+      editClientId: _id,
+      nameClient,
+      surnameClient,
+      clientNumber,
+      clientPackage,
+      status,
+    };
+  }
+  if (action.type === DELETE_CLIENT_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === DELETE_CLIENT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === EDIT_CLIENT_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === EDIT_CLIENT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'Client Updated!',
+    };
+  }
+  if (action.type === EDIT_CLIENT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
+  }
+
+    if (action.type === SHOW_STATS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+  if (action.type === SHOW_STATS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      stats: action.payload.stats,
+      monthlyApplications: action.payload.monthlyApplications,
+    };
+  }
 
 
 

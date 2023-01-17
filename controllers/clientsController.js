@@ -1,6 +1,8 @@
 import Client from "../models/Client.js"
 import { StatusCodes } from "http-status-codes"
-import {BadRequestError} from '../errors/index.js'
+import {BadRequestError,NotFoundError,UnAuthenticatedError} from '../errors/index.js'
+import mongoose from "mongoose"
+import moment from 'moment'
 
 const createClient = async (req,res) => {
     const {nameClient,surnameClient} = req.body
@@ -14,20 +16,114 @@ const createClient = async (req,res) => {
      res.status(StatusCodes.CREATED).json({ client})
 }
 const getAllClients = async (req,res) => {
- res.send('get all clients')
+  const clients = await Client.find({ createdBy:req.user.userId})
+  res.status(StatusCodes.OK)
+  .json({ clients, totalClients: clients.length, numOfPages: 1})
 }
 
 const updateClient = async (req,res) => {
- res.send('update client')
+
+const {id:clientId} = req.params
+const {surnameClient,nameClient} = req.body
+
+if (!surnameClient || !nameClient) {
+  throw new BadRequestError('Please provide all values')
+}
+const client = await Client.findOne({ _id: clientId})
+
+if(!client){
+  throw new NotFoundError(`No client with id: ${clientId}`)
+}
+//check permission
+ checkPermissions(req.user, client.createdBy);
+
+
+
+const updatedClient = await Client.findOneAndUpdate({_id: clientId}, req.body, {
+new:true,
+runValidators:true,
+
+})
+
+res.status(StatusCodes.OK).json({updatedClient})
+
+
 }
 
 const deleteClient = async (req,res) => {
- res.send('delete client')
+
+const { id: clientId } = req.params;
+
+  const client = await Client.findOne({ _id: clientId });
+
+  if (!client) {
+    throw new NotFoundError(`No job with id :${clientId}`);
+  }
+
+  checkPermissions(req.user, client.createdBy);
+
+  await client.remove();
+
+  res.status(StatusCodes.OK).json({ msg: 'Success! Client removed' });
+
+
+
 }
 
 
 const showStats = async (req,res) => {
- res.send('show stats')
+
+ let stats = await Client.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    { $group: { _id: '$status', count: { $sum: 1 } } },
+  ]);
+  stats = stats.reduce((acc, curr) => {
+    const { _id: title, count } = curr;
+    acc[title] = count;
+    return acc;
+  }, {});
+
+  const defaultStats = {
+    month: stats.month || 0,
+   threemonths : stats.threemonths || 0,
+    year: stats.year || 0,
+  };
+
+   let monthlyApplications = await Client.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { '_id.year': -1, '_id.month': -1 } },
+    { $limit: 6 },
+  ]);
+  monthlyApplications = monthlyApplications
+    .map((item) => {
+      const {
+        _id: { year, month },
+        count,
+      } = item;
+      const date = moment()
+        .month(month - 1)
+        .year(year)
+        .format('MMM Y');
+      return { date, count };
+    })
+    .reverse();
+
+
+
+
+
+
+  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
+
+
+
+
 }
 
 

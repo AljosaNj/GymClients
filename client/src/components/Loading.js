@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Loading = () => {
+const Loading = ({center}) => {
   return (
-    <div>Loading</div>
+    <div className={center?'loading loading-center' : 'loading'}></div>
   )
 }
 
 export default Loading
+

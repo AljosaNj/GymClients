@@ -1,8 +1,13 @@
 import React from 'react'
+import { ClientsContainer,SearchContainer } from '../../components'
 
 const AllClients = () => {
   return (
-    <div>AllClients</div>
+    <>
+    <SearchContainer/>
+    <ClientsContainer/>
+    
+    </>
   )
 }
 

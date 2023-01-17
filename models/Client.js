@@ -15,7 +15,7 @@ const ClientSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['month', '3month', 'year'],
+      enum: ['month', 'threemonths', 'year'],
       default: 'month',
     },
     clientPackage: {
@@ -25,7 +25,7 @@ const ClientSchema = new mongoose.Schema(
     },
     clientNumber: {
       type: String,
-     default: 'month',
+    
       required: true,
     },
     createdBy: {
@@ -37,4 +37,4 @@ const ClientSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export default mongoose.model('Client', ClientSchema)
+export default mongoose.model( 'Client', ClientSchema)
