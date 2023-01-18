@@ -24,6 +24,8 @@ import {
   EDIT_CLIENT_ERROR,
    SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
+   CLEAR_FILTERS,
+    CHANGE_PAGE,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -253,7 +255,18 @@ status: 'month',
     };
   }
 
-
+   if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      search: '',
+      searchStatus: 'all',
+      searchType: 'all',
+      sort: 'latest',
+    };
+  }
+  if (action.type === CHANGE_PAGE) {
+    return { ...state, page: action.payload.page };
+  }
 
 
   throw new Error(`no such action : ${action.type}`);

@@ -29,6 +29,8 @@ import {
     EDIT_CLIENT_ERROR,
     SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
+   CLEAR_FILTERS,
+    CHANGE_PAGE,
  } from './actions'
 
 const token = localStorage.getItem('token')
@@ -63,6 +65,11 @@ numOfPages:1,
 page:1,
  stats: {},
  monthlyApplications: [],
+ search:'',
+ searchStatus:'all',
+ searchType: 'all',
+ sort: 'latest',
+ sortOptions: ['latest','oldest','a-z','z-a']
 }
 
 
@@ -215,7 +222,13 @@ dispatch({type: CLEAR_VALUES})
   clearAlert()
 }
 const getClients = async () => {
-   let url =`/clients`
+  const {page,search,searchStatus,searchType,sort} = state
+
+   let url =`/clients?page=${page}&status=${searchStatus}&clientPackage=${searchType}&sort=${sort}`
+
+   if (search) {
+      url = url + `&search=${search}`
+   }
   
     dispatch({ type: GET_CLIENTS_BEGIN });
     try {
@@ -297,10 +310,16 @@ const getClients = async () => {
     clearAlert();
   };
 
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS });
+  }
+  const changePage = (page) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
 
 
 
- return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser,handleChange,clearValues,createClient,getClients,setEditClient,deleteClient,editClient,showStats}}>{children}</AppContext.Provider>
+ return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser,handleChange,clearValues,createClient,getClients,setEditClient,deleteClient,editClient,showStats,clearFilters,changePage}}>{children}</AppContext.Provider>
 }
 
 const useAppContext = () => {

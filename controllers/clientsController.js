@@ -1,6 +1,7 @@
 import Client from "../models/Client.js"
 import { StatusCodes } from "http-status-codes"
 import {BadRequestError,NotFoundError,UnAuthenticatedError} from '../errors/index.js'
+import checkPermissions from '../utils/checkPermissions.js';
 import mongoose from "mongoose"
 import moment from 'moment'
 
@@ -16,9 +17,58 @@ const createClient = async (req,res) => {
      res.status(StatusCodes.CREATED).json({ client})
 }
 const getAllClients = async (req,res) => {
-  const clients = await Client.find({ createdBy:req.user.userId})
+const {status,clientPackage,sort,search} = req.query
+
+const queryObject = {
+  createdBy: req.user.userId
+}
+
+if(status && status !== 'all'){
+  queryObject.status = status
+}
+
+if(clientPackage && clientPackage !== 'all') {
+  queryObject.clientPackage = clientPackage
+}
+
+if (search) {
+  queryObject.nameClient = {$regex: search, $options: 'i'}
+}
+
+
+let result = Client.find(queryObject)
+
+  if (sort === 'latest') {
+    result = result.sort('-createdAt');
+  }
+  if (sort === 'oldest') {
+    result = result.sort('createdAt');
+  }
+  if (sort === 'a-z') {
+    result = result.sort('nameClient');
+  }
+  if (sort === 'z-a') {
+    result = result.sort('-nameClient');
+  }
+
+   // setup pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+
+
+
+const clients = await result
+
+  const totalClients = await Client.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalClients / limit);
+
+
+
   res.status(StatusCodes.OK)
-  .json({ clients, totalClients: clients.length, numOfPages: 1})
+  .json({ clients, totalClients, numOfPages})
 }
 
 const updateClient = async (req,res) => {

@@ -25,7 +25,7 @@ const ClientSchema = new mongoose.Schema(
     },
     clientNumber: {
       type: String,
-    
+    default: 'number',
       required: true,
     },
     createdBy: {
