@@ -44,7 +44,7 @@ const AddClient = () => {
   return (
     <Wrapper>
       <form className='form'>
-        <h3>{isEditing ? 'edit job' : 'add job'}</h3>
+        <h3>{isEditing ? 'edit client' : 'add client'}</h3>
         {showAlert && <Alert />}
         <div className='form-center'>
           {/* name */}

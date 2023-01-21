@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa'
+import {  FaBriefcase, FaCalendarAlt,FaPhoneAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useAppContext } from '../context/appContext'
 import Wrapper from '../assets/wrappers/Client'
@@ -36,7 +36,7 @@ const {setEditClient, deleteClient} = useAppContext()
       </header>
       <div className='content'>
         <div className='content-center'>
-          <ClientInfo icon={<FaLocationArrow />} text={clientNumber} />
+          <ClientInfo icon={<FaPhoneAlt/>} text={clientNumber} />
           <ClientInfo icon={<FaCalendarAlt />} text={date} />
           <ClientInfo icon={<FaBriefcase />} text={clientPackage} />
           <div className={`status ${status}`}>{status}</div>

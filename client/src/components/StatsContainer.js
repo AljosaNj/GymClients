@@ -1,6 +1,6 @@
 import { useAppContext } from '../context/appContext'
 import StatItem from './StatItem'
-import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from 'react-icons/fa'
+import {  FaCalendarCheck, FaCalendarAlt,FaRegCalendarCheck } from 'react-icons/fa'
 import Wrapper from '../assets/wrappers/StatsContainer'
 
 const StatsContainer = () => {
@@ -10,7 +10,7 @@ const StatsContainer = () => {
     {
       title: 'month',
       count: stats.month || 0,
-      icon: <FaSuitcaseRolling />,
+      icon: <FaCalendarAlt />,
       color: '#e9b949',
       bcg: '#fcefc7',
     },
@@ -24,7 +24,7 @@ const StatsContainer = () => {
     {
       title: 'year',
       count: stats.year || 0,
-      icon: <FaBug />,
+      icon: <FaRegCalendarCheck/>,
       color: '#d66a6a',
       bcg: '#ffeeee',
     },

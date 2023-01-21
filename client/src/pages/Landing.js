@@ -1,31 +1,26 @@
-import main from '../assets/images/main.svg';
+import main from '../assets/images/main-land.svg';
 import Wrapper from '../assets/wrappers/LandingPage';
-import { Logo } from '../components';
 import { Link } from 'react-router-dom';
-//import { Navigate } from 'react-router-dom';
-//import { useAppContext } from '../context/appContext';
+
 import React from 'react';
 
 const Landing = () => {
- // const { user } = useAppContext();
+
   return (
     <React.Fragment>
      
       <Wrapper>
         <nav>
-          <Logo />
+       
         </nav>
         <div className='container page'>
           {/* info */}
           <div className='info'>
             <h1>
-              job <span>tracking</span> app
+              Gym<span>Clients</span> app
             </h1>
             <p>
-              I'm baby wayfarers hoodie next level taiyaki brooklyn cliche blue
-              bottle single-origin coffee chia. Aesthetic post-ironic venmo,
-              quinoa lo-fi tote bag adaptogen everyday carry meggings +1 brunch
-              narwhal.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
             </p>
             <Link to='/register' className='btn btn-hero'>
               Login/Register
