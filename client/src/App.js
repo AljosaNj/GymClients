@@ -12,9 +12,9 @@ const App = () => {
       path='/'
        element={
        <ProtectedRoute>
-        <SharedLayout/>
+        <SharedLayout />
        </ProtectedRoute>
-       }>
+       } >
 
 
        <Route index element={<Stats />}  />

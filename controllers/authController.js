@@ -4,7 +4,7 @@ import {BadRequestError,UnAuthenticatedError} from '../errors/index.js'
 
 const register = async (req,res) => {
 
-const {name ,email ,password} = req.body
+const {name , email , password} = req.body
 
 if(!name || !email || !password){
   throw new BadRequestError('please provide all values')
@@ -56,7 +56,8 @@ const login =  async (req,res) => {
 }
 
 const updateUser = async (req,res) => {
-  const {email ,name ,lastName, location} = req.body
+  const {email , name , lastName, location} = req.body
+  
   if (!email || !name || !lastName || !location) {
     throw new BadRequestError('Please provide all values')
   }

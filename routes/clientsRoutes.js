@@ -15,6 +15,6 @@ import {
 router.route('/').post(createClient).get(getAllClients);
 // remember about :id
 router.route('/stats').get(showStats);
-router.route('/:id').delete(deleteClient).patch( updateClient);
+router.route('/:id').delete(deleteClient).patch(updateClient);
 
 export default router;

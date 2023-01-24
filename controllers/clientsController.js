@@ -6,7 +6,7 @@ import mongoose from "mongoose"
 import moment from 'moment'
 
 const createClient = async (req,res) => {
-    const {nameClient,surnameClient} = req.body
+    const {nameClient, surnameClient} = req.body
 
      if(!nameClient || !surnameClient){
       throw new BadRequestError('Please provide all values')
@@ -17,7 +17,8 @@ const createClient = async (req,res) => {
      res.status(StatusCodes.CREATED).json({ client})
 }
 const getAllClients = async (req,res) => {
-const {status,clientPackage,sort,search} = req.query
+
+const {status, clientPackage, sort, search} = req.query
 
 const queryObject = {
   createdBy: req.user.userId
@@ -128,7 +129,7 @@ const showStats = async (req,res) => {
  ])
 
 stats = stats.reduce(( acc, curr) => {
-  const { _id: title,count} = curr
+  const { _id: title, count} = curr
   acc[title] = count
   return acc
 }, {});
@@ -168,7 +169,7 @@ stats = stats.reduce(( acc, curr) => {
 
 
 
-res.status(StatusCodes.OK).json({ defaultStats,monthlyApplications});
+res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications});
 
 
 }
