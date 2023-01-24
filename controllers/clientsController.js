@@ -122,35 +122,36 @@ const { id: clientId } = req.params;
 
 
 const showStats = async (req,res) => {
-
  let stats = await Client.aggregate([
-    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
-    { $group: { _id: '$status', count: { $sum: 1 } } },
-  ]);
-  stats = stats.reduce((acc, curr) => {
-    const { _id: title, count } = curr;
-    acc[title] = count;
-    return acc;
-  }, {});
+  { $match: { createdBy:mongoose.Types.ObjectId(req.user.userId)}},
+  { $group: { _id: '$status', count: { $sum: 1 } } },
+ ])
+
+stats = stats.reduce(( acc, curr) => {
+  const { _id: title,count} = curr
+  acc[title] = count
+  return acc
+}, {});
 
   const defaultStats = {
     month: stats.month || 0,
-   threemonths : stats.threemonths || 0,
+   threemonths: stats.threemonths || 0,
     year: stats.year || 0,
   };
-
-   let monthlyApplications = await Client.aggregate([
-    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
-    {
-      $group: {
+  
+  let monthlyApplications = await Client.aggregate([
+ { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    
+     { $group: {
         _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },
         count: { $sum: 1 },
       },
     },
-    { $sort: { '_id.year': -1, '_id.month': -1 } },
+      { $sort: { '_id.year': -1, '_id.month': -1 } },
     { $limit: 6 },
   ]);
-  monthlyApplications = monthlyApplications
+   
+ monthlyApplications = monthlyApplications
     .map((item) => {
       const {
         _id: { year, month },
@@ -167,11 +168,7 @@ const showStats = async (req,res) => {
 
 
 
-
-
-  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
-
-
+res.status(StatusCodes.OK).json({ defaultStats,monthlyApplications});
 
 
 }

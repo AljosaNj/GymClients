@@ -7,7 +7,7 @@ import React from 'react';
 const Landing = () => {
 
   return (
-    <React.Fragment>
+   
      
       <Wrapper>
         <nav>
@@ -29,7 +29,7 @@ const Landing = () => {
           <img src={main} alt='job hunt' className='img main-img' />
         </div>
       </Wrapper>
-    </React.Fragment>
+   
   );
 };
 

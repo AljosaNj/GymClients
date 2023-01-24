@@ -28,7 +28,8 @@ if (userAlreadyExists) {
       name: user.name
     }, 
     token,
-     location:user.location})
+     location:user.location,
+    })
 
 }
 

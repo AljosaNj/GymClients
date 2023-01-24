@@ -6,9 +6,9 @@ dotenv.config()
 import 'express-async-errors'
 import morgan from 'morgan'
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import path from 'path';
+//import { dirname } from 'path';
+//import { fileURLToPath } from 'url';
+//import path from 'path';
 
 
 
@@ -31,10 +31,10 @@ if(process.env.NODE_ENV !== 'production'){
  app.use(morgan('dev'))
 }
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+//const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // only when ready to deploy
-app.use(express.static(path.resolve(__dirname, './client/build')));
+//app.use(express.static(path.resolve(__dirname, './client/build')));
 
 
 app.use(express.json())

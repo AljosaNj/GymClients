@@ -17,7 +17,7 @@ const App = () => {
        }>
 
 
-       <Route index element={<Stats/>}  />
+       <Route index element={<Stats />}  />
        <Route path='all-clients'  element={<AllClients/>}   />
        <Route  path='add-client'   element={<AddClient/>} />
        <Route path='profile' element={<Profile/>}  />

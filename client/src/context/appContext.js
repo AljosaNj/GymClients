@@ -211,7 +211,6 @@ const createClient = async () => {
     })
 dispatch({type: CREATE_CLIENT_SUCCESS})
 dispatch({type: CLEAR_VALUES})
-
   } catch (error) {
     if (error.response.status === 401) return
     dispatch({
@@ -221,10 +220,12 @@ dispatch({type: CLEAR_VALUES})
   }
   clearAlert()
 }
-const getClients = async () => {
-  const {page,search,searchStatus,searchType,sort} = state
 
-   let url =`/clients?page=${page}&status=${searchStatus}&clientPackage=${searchType}&sort=${sort}`
+const getClients = async () => {
+  const { page, search, searchStatus, searchType, sort } = state
+
+
+ let url = `/clients?page=${page}&status=${searchStatus}&clientPackage=${searchType}&sort=${sort}`;
 
    if (search) {
       url = url + `&search=${search}`
@@ -293,7 +294,7 @@ const getClients = async () => {
     clearAlert();
   };
 
- const showStats = async () => {
+const showStats = async () => {
     dispatch({ type: SHOW_STATS_BEGIN });
     try {
       const { data } = await authFetch('/clients/stats');
@@ -309,6 +310,11 @@ const getClients = async () => {
     }
     clearAlert();
   };
+
+
+
+
+
 
   const clearFilters = () => {
     dispatch({ type: CLEAR_FILTERS });

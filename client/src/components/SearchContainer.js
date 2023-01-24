@@ -6,7 +6,6 @@ const SearchContainer = () => {
   const [localSearch, setLocalSearch] = useState('');
   const {
     isLoading,
-    search,
     searchStatus,
     searchType,
     sort,
@@ -24,17 +23,22 @@ const SearchContainer = () => {
     setLocalSearch('');
     clearFilters();
   };
-  const debounce = () => {
-    let timeoutID;
-    return (e) => {
-      setLocalSearch(e.target.value);
-      clearTimeout(timeoutID);
-      timeoutID = setTimeout(() => {
-        handleChange({ name: e.target.name, value: e.target.value });
-      }, 1000);
-    };
-  };
-  const optimizedDebounce = useMemo(() => debounce(), []);
+
+const debounce = () => {
+  let timeoutID;
+  return (e) => {
+    setLocalSearch(e.target.value);
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      handleChange({ name: e.target.name, value: e.target.value })
+    }, 1000)
+  }
+}
+
+// eslint-disable-next-line react-hooks/exhaustive-deps
+const optimizedDebounce = useMemo(() => debounce(), [])
+
+
   return (
     <Wrapper>
       <form className='form'>

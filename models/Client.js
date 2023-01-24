@@ -4,12 +4,12 @@ const ClientSchema = new mongoose.Schema(
   {
     surnameClient: {
       type: String,
-      required: [true, 'Please provide company'],
+      required: [true, 'Please provide surname'],
       maxlength: 20,
     },
     nameClient: {
       type: String,
-      required: [true, 'Please provide position'],
+      required: [true, 'Please provide name'],
        minlength: 3,
       maxlength: 20,
     },
