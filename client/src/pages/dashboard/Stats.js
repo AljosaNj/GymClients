@@ -1,4 +1,4 @@
-/*import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppContext } from '../../context/appContext'
 import { StatsContainer, Loading, ChartsContainer}  from '../../components'
 
@@ -22,15 +22,6 @@ if (isLoading) {
 
   )
  
-}
-
-export default Stats*/
-import React from 'react'
-
-const Stats = () => {
-  return (
-    <div>Stats</div>
-  )
 }
 
 export default Stats
