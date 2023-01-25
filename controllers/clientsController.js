@@ -135,9 +135,9 @@ stats = stats.reduce(( acc, curr) => {
 }, {});
 
   const defaultStats = {
-    month: stats.month || 0,
+    onemonth: stats.onemonth || 0,
    threemonths: stats.threemonths || 0,
-    year: stats.year || 0,
+    oneyear: stats.oneyear || 0,
   };
   
   let monthlyApplications = await Client.aggregate([
