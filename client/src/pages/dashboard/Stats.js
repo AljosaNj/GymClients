@@ -21,7 +21,7 @@ if (isLoading) {
   return (
     <>
     <StatsContainer />
-    {monthlyApplications.length > 0 && <ChartsContainer />}
+    
     </>
   )
 }
