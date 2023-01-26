@@ -57,7 +57,7 @@ const initialState = {
  clientNumber:'',
  clientPackageOptions:  ['basic', 'premium', 'pro', 'none'],
 clientPackage: 'none',
-statusOptions:  ['month', 'threemonths', 'year'] ,
+statusOptions:  ['onemonth', 'threemonths', 'year'] ,
 status: 'onemonth',
 clients:[],
 totalClients:0,
