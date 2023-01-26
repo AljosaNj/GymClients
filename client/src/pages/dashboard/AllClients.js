@@ -1,5 +1,5 @@
 import React from 'react'
-import { ClientsContainer,SearchContainer } from '../../components'
+import { ClientsContainer, } from '../../components'
 
 const AllClients = () => {
   return (
