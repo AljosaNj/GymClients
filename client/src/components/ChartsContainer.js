@@ -1,4 +1,4 @@
-/*import React, { useState } from 'react'
+import React, { useState } from 'react'
 
 import BarChart from './BarChart'
 import AreaChart from './AreaChart'
@@ -19,13 +19,7 @@ const ChartsContainer = () => {
   )
 }
 
-export default ChartsContainer*/
- import React from 'react'
+export default ChartsContainer
+
  
- const ChartsContainer = () => {
-   return (
-     <div>ChartsContainer</div>
-   )
- }
  
- export default ChartsContainer
