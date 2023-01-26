@@ -135,7 +135,7 @@ stats = stats.reduce(( acc, curr) => {
 }, {});
 
   const defaultStats = {
-    onemonth: stats.onemonth || 0,
+    month: stats.month || 0,
    threemonths: stats.threemonths || 0,
     year: stats.year || 0,
   };
