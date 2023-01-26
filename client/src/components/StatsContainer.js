@@ -4,15 +4,12 @@ import {  FaCalendarCheck, FaCalendarAlt, FaRegCalendarCheck } from 'react-icons
 import Wrapper from '../assets/wrappers/StatsContainer'
 
 
-
 const StatsContainer = () => {
-
-const { stats } = useAppContext()
-
+  const {stats} = useAppContext()
  const defaultStats = [
     {
       title: 'month',
-      count: stats.onemonth || 0,
+      count: stats.month || 0,
       icon: <FaCalendarAlt />,
       color: '#e9b949',
       bcg: '#fcefc7',
@@ -26,26 +23,25 @@ const { stats } = useAppContext()
     },
     {
       title: 'year',
-      count: stats.oneyear || 0,
+      count: stats.year || 0,
       icon: <FaRegCalendarCheck/>,
       color: '#d66a6a',
       bcg: '#ffeeee',
     },
   ]
 
+
+
   return (
     <Wrapper>
-     {defaultStats.map((item, index) => {
-      return <StatItem key={index} {...item} />
-     })}
-
-
+      {defaultStats.map((item, index) => {
+        return  <StatItem key={index} {...item}   />
+      })}
       </Wrapper>
   )
 }
 
 export default StatsContainer
-
 
 
 

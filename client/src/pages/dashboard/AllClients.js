@@ -5,7 +5,7 @@ const AllClients = () => {
   return (
     <>
     <SearchContainer />
-    <ClientsContainer/>
+    <ClientsContainer />
     
     </>
   )

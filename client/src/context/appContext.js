@@ -57,7 +57,7 @@ const initialState = {
  clientNumber:'',
  clientPackageOptions:  ['basic', 'premium', 'pro', 'none'],
 clientPackage: 'none',
-statusOptions:  ['onemonth', 'threemonths', 'oneyear'] ,
+statusOptions:  ['month', 'threemonths', 'year'] ,
 status: 'onemonth',
 clients:[],
 totalClients:0,
@@ -278,6 +278,26 @@ const getClients = async () => {
     clearAlert();
   };
 
+  const showStats = async () => {
+dispatch({type: SHOW_STATS_BEGIN})
+ try {
+  const {data} = await authFetch('/clients/stats')
+  dispatch({type:SHOW_STATS_SUCCESS,payload: {
+    stats: data.defaultStats,
+    monthlyApplications: data.monthlyApplications,
+  }})
+  
+ } catch (error) {
+ 
+  logoutUser()
+ }
+clearAlert()
+  }
+
+
+
+
+
 
   const deleteClient = async (clientId) => {
     dispatch({ type: DELETE_CLIENT_BEGIN });
@@ -294,22 +314,6 @@ const getClients = async () => {
     clearAlert();
   };
 
-const showStats = async () => {
-    dispatch({ type: SHOW_STATS_BEGIN });
-    try {
-      const { data } = await authFetch('/clients/stats');
-      dispatch({
-        type: SHOW_STATS_SUCCESS,
-        payload: {
-          stats: data.defaultStats,
-          monthlyApplications: data.monthlyApplications,
-        },
-      });
-    } catch (error) {
-      logoutUser();
-    }
-    clearAlert();
-  };
 
 
 
@@ -325,7 +329,7 @@ const showStats = async () => {
 
 
 
- return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser,handleChange,clearValues,createClient,getClients,setEditClient,deleteClient,editClient,showStats,clearFilters,changePage}}>{children}</AppContext.Provider>
+ return <AppContext.Provider value={{...state,displayAlert,setupUser,toggleSidebar,logoutUser,updateUser,handleChange,clearValues,createClient,getClients,setEditClient,deleteClient,editClient ,showStats   ,clearFilters,changePage}}>{children}</AppContext.Provider>
 }
 
 const useAppContext = () => {

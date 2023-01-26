@@ -214,6 +214,29 @@ status: 'month',
     };
   }
 
+  if (action.type === SHOW_STATS_BEGIN) {
+
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    }
+
+  }
+
+  if (action.type === SHOW_STATS_SUCCESS) {
+
+return {
+  ...state,
+  isLoading: false,
+  stats:action.payload.stats,
+  monthlyApplications: action.payload.monthlyApplications,
+}
+
+  }
+
+
+
   if (action.type === EDIT_CLIENT_BEGIN) {
     return {
       ...state,
@@ -239,21 +262,7 @@ status: 'month',
     };
   }
 
-    if (action.type === SHOW_STATS_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-      showAlert: false,
-    };
-  }
-  if (action.type === SHOW_STATS_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      stats: action.payload.stats,
-      monthlyApplications: action.payload.monthlyApplications,
-    };
-  }
+   
 
    if (action.type === CLEAR_FILTERS) {
     return {

@@ -15,7 +15,7 @@ const ClientSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['onemonth', 'threemonths', 'oneyear'],
+      enum: ['month', 'threemonths', 'year'],
       default: 'month',
     },
     clientPackage: {
