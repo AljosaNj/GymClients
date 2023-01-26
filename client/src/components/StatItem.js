@@ -1,4 +1,19 @@
-import Wrapper from '../assets/wrappers/StatItem'
+import React from 'react'
+
+const StatItem = () => {
+  return (
+    <div>StatItem</div>
+  )
+}
+
+export default StatItem
+
+
+
+
+
+
+/*import Wrapper from '../assets/wrappers/StatItem'
 
 const StatsItem = ({ count, title, icon, color, bcg }) => {
   return (
@@ -12,4 +27,4 @@ const StatsItem = ({ count, title, icon, color, bcg }) => {
   )
 }
 
-export default StatsItem
+export default StatsItem*/

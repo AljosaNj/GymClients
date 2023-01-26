@@ -222,14 +222,15 @@ dispatch({type: CLEAR_VALUES})
 }
 
 const getClients = async () => {
-  const { page, search, searchStatus, searchType, sort } = state
+ // const { page, search, searchStatus, searchType, sort } = state
 
+let url = ` /clients`
 
- let url = `/clients?page=${page}&status=${searchStatus}&clientPackage=${searchType}&sort=${sort}`;
+ /*let url = `/clients?page=${page}&status=${searchStatus}&clientPackage=${searchType}&sort=${sort}`;
 
    if (search) {
       url = url + `&search=${search}`
-   }
+   }*/
   
     dispatch({ type: GET_CLIENTS_BEGIN });
     try {
@@ -288,8 +289,8 @@ dispatch({type: SHOW_STATS_BEGIN})
   }})
   
  } catch (error) {
- 
-  logoutUser()
+ console.log(error.response);
+ // logoutUser()
  }
 clearAlert()
   }
