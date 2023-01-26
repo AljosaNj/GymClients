@@ -22,7 +22,7 @@ if (isLoading) {
   return (
     <>
     <StatsContainer />
-     <ChartsContainer />
+    
     </>
   )
 }
