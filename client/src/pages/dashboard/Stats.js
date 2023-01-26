@@ -6,12 +6,12 @@ import { StatsContainer, Loading, ChartsContainer } from '../../components'
 const Stats = () => {
    const {showStats, isLoading, } = useAppContext()
 
-useEffect(() => {
-   // eslint-disable-next-line
-  showStats()
-  
-  
-}, [])
+  useEffect(() => {
+    showStats()
+    // eslint-disable-next-line
+  }, [])
+
+
 if (isLoading) {
   return <Loading  center  />
 }

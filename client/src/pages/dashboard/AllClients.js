@@ -4,7 +4,7 @@ import { ClientsContainer,SearchContainer } from '../../components'
 const AllClients = () => {
   return (
     <>
-   
+    <SearchContainer />
     <ClientsContainer />
     
     </>
