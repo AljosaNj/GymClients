@@ -1,4 +1,4 @@
-/*import {useAppContext} from '../context/appContext'
+import {useAppContext} from '../context/appContext'
 import StatItem from './StatItem'
 import { FaCalendarAlt, FaCalendarCheck, FaRegCalendarCheck } from 'react-icons/fa'
 import Wrapper from '../assets/wrappers/StatsContainer'
@@ -11,7 +11,7 @@ const {stats} = useAppContext()
 const defaultStats = [
     {
       title: 'month',
-      count: stats.onemonth || 0,
+      count: stats.month || 0,
       icon: <FaCalendarAlt />,
       color: '#e9b949',
       bcg: '#fcefc7',
@@ -44,18 +44,10 @@ const defaultStats = [
   )
 }
 
-export default StatsContainer*/
-
-
-import React from 'react'
-
-const StatsContainer = () => {
-  return (
-    <div>StatsContainer</div>
-  )
-}
-
 export default StatsContainer
+
+
+
 
 
 

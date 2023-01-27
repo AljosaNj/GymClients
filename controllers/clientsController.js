@@ -140,6 +140,8 @@ stats = stats.reduce(( acc, curr) => {
     year: stats.year || 0,
   };
   
+
+
   let monthlyApplications = await Client.aggregate([
  { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
     

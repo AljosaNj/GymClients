@@ -15,3 +15,6 @@ const StatsItem = ({ count, title, icon, color, bcg }) => {
 }
 
 export default StatsItem
+
+
+
