@@ -223,16 +223,15 @@ dispatch({type: CLEAR_VALUES})
 }
 
 const getClients = async () => {
-  //const { page, search, searchStatus, searchType, sort } = state
- let url = `/clients`
+  const { page, search, searchStatus, searchType, sort } = state
+ 
 
-/*
  let url = `/clients?page=${page}&status=${searchStatus}&clientPackage=${searchType}&sort=${sort}`;
 
    if (search) {
       url = url + `&search=${search}`
    }
-  */
+  
     dispatch({ type: GET_CLIENTS_BEGIN });
     try {
       const { data } = await authFetch(url);
