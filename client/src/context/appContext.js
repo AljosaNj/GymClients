@@ -56,7 +56,7 @@ const initialState = {
  nameClient:'',
  surnameClient:'',
  clientNumber:'',
- clientPackageOptions:  ['basic', 'premium', 'pro', 'none'],
+ clientPackageOptions:['basic', 'premium', 'pro', 'none'],
 clientPackage: 'none',
 statusOptions: ['month', 'threemonths', 'year'] ,
 status: 'month',
@@ -289,8 +289,8 @@ dispatch({type: SHOW_STATS_BEGIN})
   }})
   
  } catch (error) {
- console.log(error.response);
-// logoutUser()
+ 
+logoutUser()
  }
 clearAlert()
   }

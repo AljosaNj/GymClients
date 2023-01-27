@@ -4,7 +4,7 @@ import { StatsContainer, Loading, ChartsContainer} from '../../components'
 
 
 const Stats = () => {
-   const {showStats, isLoading,monthlyApplications } = useAppContext()
+   const {showStats, isLoading, monthlyApplications } = useAppContext()
 
   useEffect(() => {
     showStats()
@@ -15,11 +15,7 @@ const Stats = () => {
 if (isLoading) {
   return <Loading  center  />
 }
-
-
-
-
-  return (
+ return (
     <>
     <StatsContainer />
     { monthlyApplications.length > 0 &&  <ChartsContainer /> }
